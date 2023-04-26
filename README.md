@@ -23,3 +23,11 @@
 1. 当一个项目越来越复杂时，我们就需要对业务进行分包存放
 2. 通过使用缓存数据，我们做到了增、删、改、查的基本操作
 3. 在此项目中，我们会在my_app中的__init__.py中import进来views中的东西。而在views文件中，我们又import了my_app。如此一来，形成了一个环。但我们并不建议这么做。
+
+
+## blueprint的应用
+1. 对于分多个包的时候，可以使用blueprint，将每个包当作APP
+### 用法
+1. 在需要blueprint的view视图中定义Blueprint
+2. 在app中将blueprint注册
+

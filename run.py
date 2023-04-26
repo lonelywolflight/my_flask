@@ -1,2 +1,4 @@
 from my_app import app
-app.run(debug=True)
+# app.env = "development"
+app.debug = True
+app.run()
