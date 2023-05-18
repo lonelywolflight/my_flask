@@ -31,3 +31,36 @@
 1. 在需要blueprint的view视图中定义Blueprint
 2. 在app中将blueprint注册
 
+## flask中使用db(使用postgreSQL)
+1. 准备相应的库
+    1. Flask-SQLAlchemy
+    2. psycopg2-binary
+    3. Flask-Migrate
+2. 配置数据库文件
+    1. 在根目录的__init__.py中配置数据库的URI。如：
+    ```
+    app.config["SQLALCHEMY_DATABASE_URI"] = 
+        "postgresql://postgres:Programdog666@localhost/flask_db"
+    ```
+    2. 创建db=SQLAlchemy()
+    3. 调用db.init_app(app)
+    4. 通过with初始化所有的table<br>
+    ```
+    with app.app_context():
+        db.create_all()
+    ```
+3. 通过db.session进行增删改查
+### note
+1. 添加外键约束
+```
+category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+```
+2. 与外表进行many-one的映射关系
+```
+category = db.relationship('Category', backref=db.backref('products', lazy='dynamic'))
+```
+3. migrate的使用
+    1. 首先，对应的terminal中，必须申明了export FLASK_APP=run.py
+    2. 调用flask db init，该命令会创建migrations文件夹
+    3. 调用flask db migrate，该命令会生成迁移的方法
+    4. 调用flask db upgrade，该方法会作用到数据库，改变数据库中的table
