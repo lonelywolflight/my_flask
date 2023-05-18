@@ -1,4 +1,5 @@
 from my_app import app
-# app.env = "development"
+app.env = "development"
 app.debug = True
-app.run()
+if __name__ == "__main__":
+    app.run()
