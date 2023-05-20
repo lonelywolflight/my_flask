@@ -64,3 +64,16 @@ category = db.relationship('Category', backref=db.backref('products', lazy='dyna
     2. 调用flask db init，该命令会创建migrations文件夹
     3. 调用flask db migrate，该命令会生成迁移的方法
     4. 调用flask db upgrade，该方法会作用到数据库，改变数据库中的table
+
+## redis在Flask中的使用
+ 1. 在电脑上[安装redis](https://redis.io/docs/data-types/tutorial/)
+ 2. 下载redis库的依赖
+ 3. 在app中的__init__.py中创建redis对象
+ ```
+    from redis import Redis
+    
+    redis = Redis
+ ```
+(**Note**: 当前配置使用了默认的端口号和IP)
+ - 4. 在程序中调用redis.set(key, value)保存数据。并调用redis.expire(600)设置有效时间为10分钟
+ - 5. 通过redis.get(key)获取对应key的值

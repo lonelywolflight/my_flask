@@ -2,3 +2,6 @@ __pycache__/
 .venv
 .vscode
 */__pycache__
+__pycache__
+dump.rdb
+./__pycache__
