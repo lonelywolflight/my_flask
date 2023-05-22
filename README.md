@@ -77,3 +77,6 @@ category = db.relationship('Category', backref=db.backref('products', lazy='dyna
 (**Note**: 当前配置使用了默认的端口号和IP)
  - 4. 在程序中调用redis.set(key, value)保存数据。并调用redis.expire(600)设置有效时间为10分钟
  - 5. 通过redis.get(key)获取对应key的值
+ ### redis server
+ 1. 输入redis server启动redis数据库服务
+ 2. 输入redis-cli，进入redis命令行模式
