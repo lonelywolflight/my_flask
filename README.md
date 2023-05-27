@@ -80,3 +80,5 @@ category = db.relationship('Category', backref=db.backref('products', lazy='dyna
  ### redis server
  1. 输入redis server启动redis数据库服务
  2. 输入redis-cli，进入redis命令行模式
+
+ ## [WSL安装PostgreSQL，redis已经mongodb](https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/wsl-database)
