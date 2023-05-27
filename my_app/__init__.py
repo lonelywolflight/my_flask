@@ -13,7 +13,7 @@ db = SQLAlchemy()
 app = Flask(__name__)
 # app.register_blueprint(hello)
 # app.register_blueprint(jinj2)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:Programdog666@localhost/flask_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://max:Programdog666@localhost/flask_db"
 db.init_app(app)
 migrate = Migrate(app, db)
 
