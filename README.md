@@ -82,3 +82,65 @@ category = db.relationship('Category', backref=db.backref('products', lazy='dyna
  2. 输入redis-cli，进入redis命令行模式
 
  ## [WSL安装PostgreSQL，redis已经mongodb](https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/wsl-database)
+ ### postgreSQL
+ 1. 服务
+    1. `sudo service postgresql status`
+    2. `sudo service postgresql start`
+    3. `sudo service postgresql stop`
+ 2. max 账号
+ 3. 连接数据库
+    1. `su - postgres`，切换至postgres用户
+    2. `psql flask_db`，连接flask_db数据库
+### MongoDB
+ 1. 运行Mongo实例
+    1. `sudo mongod --dbpath ~/data/db`（**由于wsl无法启动MongoDB service，所以直接运行实例**）
+    2. 检查MongoDB实例是否正在运行，`ps -e | grep 'mongod' `
+## MongoDB在Flask中的应用
+ 1. 下载flak-mongodbengine(***Note:***1.0.0版本可能需要配合Flask 2.0.0的库使用。如果使用最新的Flask库，可能会出现问题)
+ 2. 在app中的__init__.py中配置
+ ```
+ from flask import Flask
+from flask_mongoengine import MongoEngine
+
+db = MongoEngine()
+
+app = Flask(__name__)
+
+app.config['MONGODB_SETTINGS'] = [{
+    "DB": 'my_app',
+    "host": "localhost",
+    "port": 27017,
+    "alias": "default",
+}]
+
+db.init_app(app)
+ ```
+ 3. 定义model，Product
+ ```
+ import datetime
+from my_app import db
+
+class Product(db.Document):
+    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+    key = db.StringField(max_length=255,required=True)
+    name = db.StringField(max_length=255, required=True)
+    price = db.DecimalField()
+
+    def __repr__(self):
+        return '<Product %r>' % self.id
+ ```
+ 4. [查询语句](https://flask.palletsprojects.com/en/2.3.x/patterns/mongoengine/)
+    1. 单个查询
+    ```
+    Product.objects(key=key).get_or_404()
+    ```
+    2. 全部查询
+    ```
+    Product.objects.all()
+    ```
+    3. 插入
+    ```
+    product = Product(name=name,key=key,price=Decimal(price))
+    
+    product.save()
+    ```
