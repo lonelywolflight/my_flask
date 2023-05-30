@@ -4,4 +4,4 @@
 __pycache__
 dump.rdb
 *.pyc
-/migrations
+# /migrations
