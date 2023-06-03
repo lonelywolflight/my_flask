@@ -144,3 +144,49 @@ class Product(db.Document):
     
     product.save()
     ```
+## requesst上下文
+### request获取数据方式
+ 1. Get方法
+ ```
+    request.args.get('name')
+ ```
+ 2. Post方法
+ ```
+    request.form.get('name')
+ ```
+## Class base view
+ 1. 继承View
+ ```
+from flask.typing import ResponseReturnValue
+from flask.views import View, MethodView
+from flask import request
+from my_app import app
+
+class GetPostRequest(View):
+
+    methods = ['GET', 'POST']
+    
+    def dispatch_request(self) -> ResponseReturnValue:
+        if request.method == 'GET':
+            bar = request.args.get('foo', 'bar')
+        else:
+            bar = request.form.get('foo', 'bar')
+        return 'A simple Flask request where foo is %s' % bar
+    
+app.add_url_rule('/a-request', view_func = GetPostRequest.as_view('a_request'))
+ ```
+ 2. 继承MethodView
+ ```
+class GetMethodRequest(MethodView):
+
+    def get(self):
+        bar = request.args.get('foo', 'bar')
+        return 'A simple Flask request where foo is %s' % bar
+    
+
+    def post(self):
+        bar = request.form.get('foo', 'bar')
+        return 'A simple Flask request where foo is %s' % bar
+    
+app.add_url_rule('/method-request', view_func=GetMethodRequest.as_view('method_request'))
+ ```
